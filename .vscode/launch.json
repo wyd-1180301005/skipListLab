@@ -1,0 +1,34 @@
+{
+    // 使用 IntelliSense 了解相关属性。 
+    // 悬停以查看现有属性的描述。
+    // 欲了解更多信息，请访问: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "调试myAllocator",
+            "type": "cppvsdbg",
+            "request": "launch",
+            "program": "${workspaceFolder}\\skipLabBuild\\binaries\\myAllocator\\Debug\\TestmyAllocator.exe",
+            "args": [],
+            "stopAtEntry": false,
+            "cwd": "${workspaceFolder}\\skipListLab\\data",
+            "environment": [],
+            "console": "integratedTerminal",
+            "preLaunchTask":"build"
+        },
+        
+        {
+            "name": "调试test",
+            "type": "cppvsdbg",
+            "request": "launch",
+            "program": "${workspaceFolder}\\skipLabBuild\\binaries\\test\\Debug\\test.exe",
+            "args": [],
+            "stopAtEntry": false,
+            "cwd": "${workspaceFolder}\\skipListLab\\data",
+            "environment": [],
+            "console": "integratedTerminal",
+            "preLaunchTask":"build"
+
+        }
+    ]
+}
