@@ -31,7 +31,9 @@ test::~test()
 int main()
 {
 
-    std::cout<<"start"<<std::endl;
+    // std::cout<<"start"<<std::endl;
+    // myAllocator<test> allocate(100,10);
+    // allocate.apply_alloc(10);
 
     // static const test  a=test();
     // static const test  b=test();
