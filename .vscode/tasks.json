@@ -3,16 +3,74 @@
     // for the documentation about the tasks.json format
     "version": "2.0.0",
     "tasks": [
-        {   
+        {
             "label": "cmake",
             "type": "shell",
-            "command": "cmake -S skipListLab -B skipLabBuild",
+            "command": "cmake -S skipListLab -B skipLabBuild"
         },
         {
             "label": "build",
-            "type":"shell",
-            "command":"cmake --build skipLabBuild",
-            "dependsOn":"cmake"
+            "type": "shell",
+            "command": "cmake --build skipLabBuild",
+            "dependsOn": "cmake"
+        },
+        {
+            "label": "gtest",
+            "type": "shell",
+            "command": "cd skipLabBuild ; ctest",
+            "dependsOn": "build"
+        },
+        {
+            "label": "run_bat",
+            "type": "shell",
+            "command": ".vscode/cmdls.bat",
+            "problemMatcher": [
+                {
+                    "source": "cmake",
+                    "fileLocation": ["relative","${workspaceFolder}\\skipListLab"],
+                    "applyTo": "allDocuments",
+                    "owner": "cmake",
+                    "pattern": [
+                        {
+                            "regexp": "CMake (Error) at (.*txt):([0-9]*)[^:]*:",
+                            "kind": "location",
+                            "file": 2,
+                            "location": 3,
+                            "severity": 1
+                        },
+                        {
+                            "regexp": "^([^\\.\n]*\\.){0,1}([^\\.]*\\.){1,1}([^\\.\n\n]*\\.){0,1}$",
+                            "message":2
+                        }
+                    ]
+                },
+                {
+                    "source": "gtest",
+                    "fileLocation": "absolute",
+                    "applyTo": "allDocuments",
+                    "owner": "gtest",
+                    "pattern": {
+                        "regexp": "(.*.cpp)\\(([0-9]*)\\): (error):(.*)",
+                        "kind": "location",
+                        "location": 2,
+                        "file": 1,
+                        "severity": 3,
+                        "message": 4
+                    }
+                },
+                {
+                    "source": "cpp",
+                    "fileLocation": "absolute",
+                    "pattern": {
+                      "regexp": "^(.*\\.[c|h]pp)\\((\\d+),(\\d+)\\):\\s(warning|error|message)(.*)$",
+                      "file": 1,
+                      "line": 2,
+                      "column": 3,
+                      "severity": 4,
+                      "message": 5
+                    }
+                }
+            ]
         }
     ]
 }

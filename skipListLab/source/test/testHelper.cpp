@@ -1,53 +1,17 @@
-# include <iostream>
-# include <random>
-# include <cstdlib>
-# include <vector>
-# include <set>
-#include <list>
+# ifndef testhelper_cpp
+# define testhelper_cpp
 
-# include "skipList.hpp"
-# include "myAllocator.hpp"
+# include "gtest/gtest.h"
+using namespace testing;
 
-
-class test
+template<typename T>
+AssertionResult  assert_equal(T a ,T b)
 {
-private:
-    int m=0;
-public:
-    test(/* args */);
-    ~test();
-};
-
-test::test(/* args */)
-{
+    if (a==b)
+    {
+        return AssertionSuccess() ;
+    }
+    return AssertionFailure() << __FILE__ <<" : "<<__LINE__;
 }
 
-test::~test()
-{
-}
-
-
-
-int main()
-{
-
-    // std::cout<<"start"<<std::endl;
-    // myAllocator<test> allocate(100,10);
-    // allocate.apply_alloc(10);
-
-    // static const test  a=test();
-    // static const test  b=test();
-    // skipList<test,a,b> s;
-    // s.insert(test());
-
-    // std::default_random_engine generator(time(NULL));  
-    // std::uniform_int_distribution<int> dis(0,100);  
-    // for(int i=0;i<5;i++)  
-    // {  
-    //     std::cout<<dis(generator)<<std::endl;  
-    // }  
-
-
-    std::cout<<"end"<<std::endl;
-    return 0;
-}
+# endif

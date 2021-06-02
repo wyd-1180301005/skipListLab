@@ -8,27 +8,13 @@
             "name": "调试myAllocator",
             "type": "cppvsdbg",
             "request": "launch",
-            "program": "${workspaceFolder}\\skipLabBuild\\binaries\\myAllocator\\Debug\\TestmyAllocator.exe",
+            "program": "${workspaceFolder}\\skipLabBuild\\Debug\\TestmyAllocator.exe",
             "args": [],
             "stopAtEntry": false,
             "cwd": "${workspaceFolder}\\skipListLab\\data",
             "environment": [],
             "console": "integratedTerminal",
             "preLaunchTask":"build"
-        },
-        
-        {
-            "name": "调试test",
-            "type": "cppvsdbg",
-            "request": "launch",
-            "program": "${workspaceFolder}\\skipLabBuild\\binaries\\test\\Debug\\test.exe",
-            "args": [],
-            "stopAtEntry": false,
-            "cwd": "${workspaceFolder}\\skipListLab\\data",
-            "environment": [],
-            "console": "integratedTerminal",
-            "preLaunchTask":"build"
-
         }
     ]
 }

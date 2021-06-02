@@ -2,6 +2,7 @@
 # ifndef SKIPLIST_HPP
 # define SKIPLIST_HPP
 
+# include "myAllocator.hpp"
 
 
 template<typename Vtype>
