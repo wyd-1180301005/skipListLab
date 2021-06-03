@@ -1,0 +1,14 @@
+用于 .NET Framework 的 Microsoft (R) 生成引擎版本 16.9.0+57a23d249
+版权所有(C) Microsoft Corporation。保留所有权利。
+
+  gtest.vcxproj -> C:\Users\papalatia\Desktop\workplace\cpp\myskipListLab\skipLabBuild\lib\Debug\gtestd.lib
+  gtest_main.vcxproj -> C:\Users\papalatia\Desktop\workplace\cpp\myskipListLab\skipLabBuild\lib\Debug\gtest_maind.lib
+  myAllocator_origin.cpp
+  myAllocator.vcxproj -> C:\Users\papalatia\Desktop\workplace\cpp\myskipListLab\skipLabBuild\binaries\myAllocator\Debug\myAllocator.lib
+  testHelper.vcxproj -> C:\Users\papalatia\Desktop\workplace\cpp\myskipListLab\skipLabBuild\binaries\test\Debug\testHelper.lib
+  TestmyAllocator.cpp
+  TestmyAllocator.vcxproj -> C:\Users\papalatia\Desktop\workplace\cpp\myskipListLab\skipLabBuild\Debug\TestmyAllocator.exe
+  TestmySkipList.cpp
+  TestmySkipList.vcxproj -> C:\Users\papalatia\Desktop\workplace\cpp\myskipListLab\skipLabBuild\Debug\TestmySkipList.exe
+  gmock.vcxproj -> C:\Users\papalatia\Desktop\workplace\cpp\myskipListLab\skipLabBuild\lib\Debug\gmockd.lib
+  gmock_main.vcxproj -> C:\Users\papalatia\Desktop\workplace\cpp\myskipListLab\skipLabBuild\lib\Debug\gmock_maind.lib

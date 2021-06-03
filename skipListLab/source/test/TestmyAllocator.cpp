@@ -12,61 +12,90 @@ public:
     NodeType* lst=nullptr;
 };
 
-TEST(TestMETA, is_builtin_type) 
+template<typename T>
+class NodeType_tmpl
 {
-  // Expect two strings not to be equal.
-  EXPECT_STRNE("hello", "hello1");
-  // Expect equality.
-  EXPECT_EQ(7 * 6, 42);
-}
-TEST(TestMETA, is_builtin_type1) 
+public:
+    int v;
+    T& v1;
+    NodeType* nxt=nullptr;
+    NodeType* lst=nullptr;
+};
+
+// 测试is_builtin_type<>
+TEST(Test_is_builtin_type, built_in_type) 
 {
-  // Expect two strings not to be equal.
-  EXPECT_STRNE("hello", "h2ello");
-  // Expect equality.
-  EXPECT_EQ(7 * 6, 42);
+  // typical built_in type
+  ASSERT_TRUE(is_builtin_type<int>);
+  ASSERT_TRUE(is_builtin_type<int*>);
+  ASSERT_TRUE(is_builtin_type<int&>);
+  ASSERT_TRUE(is_builtin_type<float&>);
+  ASSERT_TRUE(is_builtin_type<float**>);
+  ASSERT_TRUE(is_builtin_type<float*&>);
+  ASSERT_TRUE(is_builtin_type<float***>);
+
+  // reference and pointer (considered as built_in type)
+  ASSERT_TRUE(is_builtin_type<NodeType*>);
+  ASSERT_TRUE(is_builtin_type<NodeType&>);
+  ASSERT_TRUE(is_builtin_type<NodeType*&>);
+  ASSERT_TRUE(is_builtin_type<const NodeType&>);
+  ASSERT_TRUE(is_builtin_type<const NodeType*>);
+
+  ASSERT_TRUE(is_builtin_type<NodeType_tmpl<int>*>);
+  ASSERT_TRUE(is_builtin_type<NodeType_tmpl<int>&>);
+  ASSERT_TRUE(is_builtin_type<NodeType_tmpl<int>*&>);
+  ASSERT_TRUE(is_builtin_type<const NodeType_tmpl<int>&>);
+  ASSERT_TRUE(is_builtin_type<const NodeType_tmpl<int>*>);
+
+  ASSERT_TRUE(is_builtin_type<NodeType_tmpl<NodeType>*>);
+  ASSERT_TRUE(is_builtin_type<NodeType_tmpl<NodeType>&>);
+  ASSERT_TRUE(is_builtin_type<NodeType_tmpl<NodeType>*&>);
+  ASSERT_TRUE(is_builtin_type<const NodeType_tmpl<NodeType>&>);
+  ASSERT_TRUE(is_builtin_type<const NodeType_tmpl<NodeType>*>);
+  
 }
-// int main()
-// {
+TEST(Test_is_builtin_type, not_built_in_type) 
+{
+  ASSERT_FALSE(is_builtin_type<NodeType>);
+  ASSERT_FALSE(is_builtin_type<const NodeType>);
+  ASSERT_FALSE(is_builtin_type<NodeType_tmpl<int>>);
+  ASSERT_FALSE(is_builtin_type<const NodeType_tmpl<int>>);
+  ASSERT_FALSE(is_builtin_type<NodeType_tmpl<NodeType>>);
+  ASSERT_FALSE(is_builtin_type<const NodeType_tmpl<NodeType>>);
+}
 
-//     // // 测试is_builtin_type-全部正确
-//     // // 1 
-//     // if (is_builtin_type<int>)std::cout<<"yes"<<std::endl;else std::cout<<"no"<<std::endl;
-//     // // 2
-//     // if (is_builtin_type<bool>)std::cout<<"yes"<<std::endl;else std::cout<<"no"<<std::endl;
-//     // // 3
-//     // if (is_builtin_type<int*>)std::cout<<"yes"<<std::endl;else std::cout<<"no"<<std::endl;
-//     // // 4 
-//     // if (is_builtin_type<int**>)std::cout<<"yes"<<std::endl;else std::cout<<"no"<<std::endl;
-//     // // 5
-//     // if (is_builtin_type<int***>)std::cout<<"yes"<<std::endl;else std::cout<<"no"<<std::endl;
-//     // // 6
-//     // if (is_builtin_type<float***>)std::cout<<"yes"<<std::endl;else std::cout<<"no"<<std::endl;  
-//     // // 7
-//     // if (is_builtin_type<float***>)std::cout<<"yes"<<std::endl;else std::cout<<"no"<<std::endl;
-//     // // 8
-//     // if (is_builtin_type<float&>)std::cout<<"yes"<<std::endl;else std::cout<<"no"<<std::endl;
-//     // // 9
-//     // if (is_builtin_type<float*&>)std::cout<<"yes"<<std::endl;else std::cout<<"no"<<std::endl;
-//     // // 10
-//     // if (is_builtin_type<float*&>)std::cout<<"yes"<<std::endl;else std::cout<<"no"<<std::endl;
-//     // // 11 no
-//     // if (is_builtin_type<NodeType>)std::cout<<"yes"<<std::endl;else std::cout<<"no"<<std::endl;
-//     // // 12
-//     // if (is_builtin_type<NodeType&>)std::cout<<"yes"<<std::endl;else std::cout<<"no"<<std::endl;
-//     // // 13
-//     // if (is_builtin_type<NodeType*&>)std::cout<<"yes"<<std::endl;else std::cout<<"no"<<std::endl;
-//     // // 14
-//     // if (is_builtin_type<const NodeType*&>)std::cout<<"yes"<<std::endl;else std::cout<<"no"<<std::endl;
-//     // // 15 no
-//     // if (is_builtin_type<const NodeType>)std::cout<<"yes"<<std::endl;else std::cout<<"no"<<std::endl;
+// 测试is_ref<>
+TEST(Test_is_ref,is_ref)
+{
+  ASSERT_TRUE(is_ref<int&>);
+  ASSERT_TRUE(is_ref<float&>);
+  ASSERT_TRUE(is_ref<float*&>);
+  ASSERT_TRUE(is_ref<NodeType*&>);
+  ASSERT_TRUE(is_ref<NodeType&>);
+  ASSERT_TRUE(is_ref<NodeType_tmpl<int>&>);
+  ASSERT_TRUE(is_ref<NodeType_tmpl<int*>&>);
+  ASSERT_TRUE(is_ref<NodeType_tmpl<NodeType>&>);
+  ASSERT_TRUE(is_ref<NodeType_tmpl<NodeType>*&>);
+}
+TEST(Test_is_ref,is_not_ref)
+{
+  ASSERT_FALSE(is_ref<int>);
+  ASSERT_FALSE(is_ref<float>);
+  ASSERT_FALSE(is_ref<float*>);
+  ASSERT_FALSE(is_ref<NodeType*>);
+  ASSERT_FALSE(is_ref<NodeType>);
+  ASSERT_FALSE(is_ref<NodeType_tmpl<int>>);
+  ASSERT_FALSE(is_ref<NodeType_tmpl<int*>>);
+  ASSERT_FALSE(is_ref<NodeType_tmpl<NodeType>>);
+  ASSERT_FALSE(is_ref<NodeType_tmpl<NodeType>*>);
+}
 
-//     // myAllocator<int> allocate(100,10);
-//     // int * p10=allocate.apply_alloc(10);
-//     // int * p100=allocate.apply_alloc(100);
-//     // int * p20=allocate.apply_alloc(40);
-//     // allocate.free_alloc(p100,100);
-//     // allocate.free_alloc(p10,10);
-//     // int * p8=allocate.apply_alloc(8);
 
-// }
+
+    // myAllocator<int> allocate(100,10);
+    // int * p10=allocate.apply_alloc(10);
+    // int * p100=allocate.apply_alloc(100);
+    // int * p20=allocate.apply_alloc(40);
+    // allocate.free_alloc(p100,100);
+    // allocate.free_alloc(p10,10);
+    // int * p8=allocate.apply_alloc(8);

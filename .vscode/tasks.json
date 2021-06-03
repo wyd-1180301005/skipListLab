@@ -27,7 +27,10 @@
             "problemMatcher": [
                 {
                     "source": "cmake",
-                    "fileLocation": ["relative","${workspaceFolder}\\skipListLab"],
+                    "fileLocation": [
+                        "relative",
+                        "${workspaceFolder}\\skipListLab"
+                    ],
                     "applyTo": "allDocuments",
                     "owner": "cmake",
                     "pattern": [
@@ -36,11 +39,12 @@
                             "kind": "location",
                             "file": 2,
                             "location": 3,
-                            "severity": 1
+                            "severity": 1,
+                            "code": 3
                         },
                         {
                             "regexp": "^([^\\.\n]*\\.){0,1}([^\\.]*\\.){1,1}([^\\.\n\n]*\\.){0,1}$",
-                            "message":2
+                            "message": 2
                         }
                     ]
                 },
@@ -61,16 +65,27 @@
                 {
                     "source": "cpp",
                     "fileLocation": "absolute",
-                    "pattern": {
-                      "regexp": "^(.*\\.[c|h]pp)\\((\\d+),(\\d+)\\):\\s(warning|error|message)(.*)$",
-                      "file": 1,
-                      "line": 2,
-                      "column": 3,
-                      "severity": 4,
-                      "message": 5
-                    }
+                    "pattern": [
+                        {
+                            "regexp": "^(.*\\.[c|h]pp)\\((\\d+),(\\d+)\\):\\s*(warning|error|)\\s*([0-9]*)\\s*$",
+                            "file": 1,
+                            "line": 2,
+                            "column": 3,
+                            "severity": 4,
+                            "code": 5
+                        },
+                        {
+                            "regexp": "^([A-Z][0-9]*.*)(\\[.*\\]){1,1}\\s*$",
+                            "message": 1,
+                            "loop": false
+                        }
+                    ]
                 }
-            ]
+            ],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            }
         }
     ]
 }

@@ -27,18 +27,3 @@ test::test(/* args */)
 test::~test()
 {
 }
-
-TEST(TestMETA, is_builtin_type) 
-{
-  // Expect two strings not to be equal.
-  EXPECT_STRNE("hello", "hello");
-  // Expect equality.
-  EXPECT_EQ(7 * 6, 42);
-}
-TEST(TestMETA, is_builtin_type1) 
-{
-  // Expect two strings not to be equal.
-  EXPECT_STRNE("hello", "hello");
-  // Expect equality.
-  EXPECT_EQ(7 * 6, 42);
-}

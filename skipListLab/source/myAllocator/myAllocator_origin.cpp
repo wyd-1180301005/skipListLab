@@ -1,4 +1,4 @@
-# ifndef MYALLOCATOR_ORIGIN_CPP
+﻿# ifndef MYALLOCATOR_ORIGIN_CPP
 # define MYALLOCATOR_ORIGIN_CPP
 
 # include "myAllocator.hpp"

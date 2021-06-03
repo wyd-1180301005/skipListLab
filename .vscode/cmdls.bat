@@ -1,3 +1,6 @@
+@REM 使用utf-8格式存取文件
+chcp 65001
+
 @echo on
 @REM echo processing cmdls.bat
 
@@ -16,8 +19,10 @@ if !errorlevel!==0 (
 )
 @REM 如果第一步cmake成功,则进行构建
 if !cmake_success!==true (
+    cls
     echo building:
-    cmake --build skipLabBuild
+    set log_file_name=log_build.txt
+    cmake --build skipLabBuild > !log_file_name!
     if !errorlevel!==0 (
         set build_success=true
     ) else (
@@ -25,6 +30,7 @@ if !cmake_success!==true (
     )
     @REM 只有在构建成功的情况下才会进行测试
     if !build_success!==true (
+        cls
         echo testing:
         cd ".\skipLabBuild\"
         ctest
@@ -39,10 +45,41 @@ if !cmake_success!==true (
         if !ctest_success!==false (
             echo evaluating:
             type Testing\\Temporary\\LastTest.log
+            pause
+            cls
         )
+    ) else (
+    cls
+    @REM 将log输出到终端中
+    set dir=''
+    set level=''
+    set code=''
+    set msg=''
+    set /a count=0
+    for /f "tokens=1-3,* delims= "  %%G in ('findstr /r /x  /c:".*error.*" log_build.txt')  do (
+        set dir=%%G
+        set level=%%H
+        set code=%%I
+        set msg=%%J
+        set /a count=!count!+1
+        echo !dir! !level! !count!
+        echo !code! !msg!
+    )
+    set /a count=0
+    for /f "tokens=1-3,* delims= "  %%G in ('findstr /r /x  /c:".*warning.*" log_build.txt')  do (
+        set dir=%%G
+        set level=%%H
+        set code=%%I
+        set msg=%%J
+        set /a count=!count!+1
+        echo !dir! !level! !count!
+        echo !code! !msg!
+    )
+    pause
+    cls
     )
 )
 
-@REM @echo on
-@REM echo end:processing cmdls.bat
+@echo on
+echo end:processing cmdls.bat
 
