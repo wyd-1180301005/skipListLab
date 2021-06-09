@@ -2,6 +2,7 @@
 # ifndef SKIPLIST_ORIGIN_HPP
 # define SKIPLIST_ORIGIN_HPP
 
+# include <random>
 # include "myAllocator.hpp"
 
 
@@ -30,6 +31,8 @@ class skipList
     allocator * the_allocator;
     std::vector<NodeType*> tmp_pos;
 
+    std::default_random_engine* gen;
+    std::geometric_distribution<int>*  dis;
 private:
     /**
      * 重新申请头部指针:
@@ -80,7 +83,7 @@ public:
      * 从表中删除掉某一个元素的方法
      * 返回值代表是否成功删除(不存在的元素无法删除)
      */
-    bool remove(ref_type element) noexcept;
+    bool erase(ref_type element) noexcept;
 
     /**
      * 向表中插入元素的方法
@@ -88,16 +91,24 @@ public:
      */ 
     void insert(ref_type element,int insertLayer);
 
+    /**
+     * 向表中插入元素的方法
+     * 使用左值引用
+     */ 
+    void insert(ref_type element);
+
     template<typename ... AllocArgs>
-    skipList(int init_capacity,AllocArgs ... args)
+    skipList(int init_capacity,double prob,AllocArgs ... args)
     {
+        gen=new std::default_random_engine(time(NULL));
+        dis=new std::geometric_distribution<int>(prob);
         the_allocator=new allocator(args ...);
         the_list=the_allocator->apply_alloc(init_capacity);
         capacity=init_capacity;
         layer=0;
     }
 
-    # ifndef  DISABLE_DEBUG_INTERFACE 
+# ifndef  DISABLE_DEBUG_INTERFACE 
     void print_list()
     {
         std::cout<<"st-list"<<std::endl;
@@ -131,7 +142,7 @@ public:
     {
         return the_allocator;
     }
-    # endif
+# endif
 
     ~skipList()
     {

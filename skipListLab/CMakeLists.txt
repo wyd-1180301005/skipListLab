@@ -15,15 +15,15 @@ if(CONFIG_TYPE)
   message(FATAL_ERROR "NULL config.")
 endif()
 
-if(${CONFIG_TYPE} STREQUAL DEBUG)
+if(${CONFIG_TYPE} STREQUAL Debug)
 
   # MUST use FORCE option sothat cached variables are rewritten 
   set(ENABLE_DEBUG_INTERFACE TRUE CACHE BOOL "" FORCE)
   set(ENABLE_TESTING TRUE CACHE BOOL "" FORCE)
   add_definitions(-DENABLE_DEBUG_INTERFACE -DENABLE_TESTING)
-  add_compile_options(/Od /std:c++17)
+  add_compile_options(/Od /std:c++17 )
 
-elseif(${CONFIG_TYPE} STREQUAL RELEASE)
+elseif(${CONFIG_TYPE} STREQUAL Release)
 
   set(ENABLE_DEBUG_INTERFACE FALSE CACHE BOOL "" FORCE)
   set(ENABLE_TESTING FALSE CACHE BOOL "" FORCE)
@@ -31,15 +31,8 @@ elseif(${CONFIG_TYPE} STREQUAL RELEASE)
   add_compile_options(/O2 /std:c++17)
   
 else()
-  message(FATAL_ERROR "unknown config.")
+  message(FATAL_ERROR "unknown config should be Release or Debug.")
 endif()
-
-
-set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}")
-
-add_subdirectory(source/skipList binaries/skipList)
-add_subdirectory(source/myAllocator binaries/myAllocator)
-
 
 # test only in debug config
 if(${ENABLE_TESTING})
@@ -52,5 +45,14 @@ if(${ENABLE_TESTING})
   set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
   FetchContent_MakeAvailable(googletest)
   add_subdirectory(source/test binaries/test)
-  add_subdirectory(source/main binaries/main)
 endif()
+
+
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}")
+
+add_subdirectory(source/skipList binaries/skipList)
+add_subdirectory(source/myAllocator binaries/myAllocator)
+add_subdirectory(source/main binaries/main)
+
+
+

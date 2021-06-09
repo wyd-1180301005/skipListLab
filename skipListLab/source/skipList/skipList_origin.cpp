@@ -16,7 +16,7 @@
     skipList_template(void)
     renew_head(int num_new)
     {
-        int num_new_alloc=std::max(2*layer,num_new+1);
+        int num_new_alloc=(((2*layer) > (num_new+1)) ? (2*layer) : (num_new+1));
         NodeType* new_list=the_allocator->apply_alloc(num_new_alloc);
 
         // 进行拷贝
@@ -154,7 +154,7 @@
      * 返回值代表是否成功删除(不存在的元素无法删除)
      */
     skipList_template(bool)
-    remove(ref_type element) noexcept
+    erase(ref_type element) noexcept
     {
         int num=find_true_pre(element);
         // 不存在该元素,返回false
@@ -199,4 +199,35 @@
             (st-i)->element=element;
         }
     }
+
+    /**
+     * 向表中插入元素的方法
+     * 使用左值引用
+     */
+    skipList_template(void) 
+    insert(ref_type element)
+    {
+        int insertLayer=(*dis)(*gen);
+        // 如果要insert的层数大于当前层数:
+        if(insertLayer>layer)
+        {
+            if(insertLayer>capacity)
+            {
+                renew_head(insertLayer);
+            }
+            layer=insertLayer;
+        }
+
+        int const layer_to_insert=find_pre(element,insertLayer+1);
+        NodeType* st=the_allocator->apply_alloc(layer_to_insert)+layer_to_insert-1;
+        NodeType* tmp;
+        for(int i=0;i<layer_to_insert;i++)
+        {
+            tmp=tmp_pos[i]->nxt;
+            tmp_pos[i]->nxt=(st-i);
+            (st-i)->nxt=tmp;
+            (st-i)->element=element;
+        }
+    }
+
 # endif

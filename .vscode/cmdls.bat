@@ -23,7 +23,7 @@ if !errorlevel!==0 (
 if !cmake_success!==true (
     echo building:
     set log_file_name=log_build.txt
-    cmake --build %2 > !log_file_name!
+    cmake --build %2 --config %3 > !log_file_name!
     echo end building:
     if !errorlevel!==0 (
         set build_success=true

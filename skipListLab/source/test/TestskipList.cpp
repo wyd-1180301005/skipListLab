@@ -15,8 +15,8 @@ class TestskipList: public ::testing::Test
     skipList<int>* a2;
     TestskipList()
     {
-      a1=new skipList<int>(20,100,20,3);
-      a2=new skipList<int>(1,1000,30,2);
+      a1=new skipList<int>(20,0.5,100,20,3);
+      a2=new skipList<int>(1,0.5,1000,30,2);
     }
     ~TestskipList()
     {
@@ -64,7 +64,7 @@ TEST_F(TestskipList,test_insert_remove)
     int num=29;
     a1->insert(num,num_layer);
     pt p_in=alloc1->pt;
-    a1->remove(num);
+    a1->erase(num);
     pt p_out=alloc1->pt_free;
     int num_layer_out=alloc1->last_size_free;
     ASSERT_EQ(p_in,p_out);
@@ -77,7 +77,7 @@ TEST_F(TestskipList,test_insert_remove)
       num=i;
       a1->insert(num,num_layer);
       pt p_in=alloc1->pt;
-      a1->remove(num);
+      a1->erase(num);
       pt p_out=alloc1->pt_free;
       int num_layer_out=alloc1->last_size_free;
       ASSERT_EQ(p_in,p_out);
@@ -97,7 +97,7 @@ TEST_F(TestskipList,test_insert_remove_find)
   }
   for(int i=0;i<10000;i+=std::max(1,(i*i*i+11*i*i+17*i)%13))
   {
-    bool success=a1->remove(i);
+    bool success=a1->erase(i);
     ASSERT_EQ(success,s0.find(i)!=s0.end());
     s0.erase(i);
   }
@@ -105,4 +105,79 @@ TEST_F(TestskipList,test_insert_remove_find)
   {
     ASSERT_EQ(a1->find(i),s0.find(i)!=s0.end());
   }
+}
+
+// 和stlmultiset对照,确保正确性
+TEST_F(TestskipList,test_empty_remove_find)
+{
+  for(int i=0;i<10;i++)
+  {
+    a1->erase(i);
+    a1->find(i);
+    a1->insert(i);
+  }
+  // for(int i=0;i<100000;i++)
+  // {
+  //   a1->erase(i);
+  //   a1->find(i);
+  //   a1->insert(i);
+  // }
+  // for(int i=0;i<100000;i++)
+  // {
+  //   a1->erase(i);
+  //   a1->erase(i);
+  // }
+  // for(int i=0;i<100000;i++)
+  // {
+  //   a1->find(i);
+  // }
+}
+
+// 和stlmultiset对照,确保正确性
+TEST_F(TestskipList,test_multi_insert_remove_find)
+{
+  for(int i=0;i<1000;i++)
+  {
+        ASSERT_EQ(false,a1->erase(i));
+        ASSERT_EQ(false,a1->find(i));
+        a1->insert(i);
+        if(!a1->find(i))
+          a1->insert(i);
+        if(!a1->find(i))
+          a1->insert(i);
+        if(!a1->find(i))
+          a1->insert(i);
+        if(!a1->find(i))
+          a1->insert(i);
+        // a1->insert(i);
+        ASSERT_EQ(true,a1->find(i));
+        ASSERT_EQ(true,a1->find(i));
+        ASSERT_EQ(true,a1->find(i));
+        ASSERT_EQ(true,a1->find(i));
+        ASSERT_EQ(true,a1->find(i));
+        ASSERT_EQ(true,a1->find(i));
+        ASSERT_EQ(true,a1->erase(i));
+        if(!a1->find(i))
+          a1->insert(i);
+        ASSERT_EQ(true,a1->erase(i));
+        if(!a1->find(i))
+          a1->insert(i);
+        ASSERT_EQ(true,a1->erase(i));
+        ASSERT_EQ(false,a1->erase(i));
+  }
+  // for(int i=0;i<100000;i++)
+  // {
+  //   a1->erase(i);
+  //   a1->find(i);
+  //   a1->insert(i);
+  // }
+  // for(int i=0;i<100000;i++)
+  // {
+  //   a1->erase(i);
+  //   a1->erase(i);
+  // }
+  // for(int i=0;i<100000;i++)
+  // {
+  //   a1->find(i);
+  // }
 }

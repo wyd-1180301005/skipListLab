@@ -14,7 +14,7 @@
             "cwd": "${workspaceFolder}\\skipListLab\\data",
             "environment": [],
             "console": "integratedTerminal",
-            "preLaunchTask":"build"
+            "preLaunchTask":"run_bat"
         }
     ]
 }

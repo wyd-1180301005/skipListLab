@@ -1,104 +1,139 @@
 # include <iostream>
+# include <random>
 # include <typeinfo>
 # include <set>
+# include <windows.h>
+# include <stdio.h>
 # include "myAllocator.hpp"
 # include "skipList.hpp"
-# define DISABLE_DEBUG_INTERFACE
 
-class classA
+class myClock
 {
-public:
-    int v;
-    classA* nxt=nullptr;
-    classA* lst=nullptr;
-};
+    LARGE_INTEGER freq;
+    LARGE_INTEGER start_t, stop_t;
+    double exe_time;
 
-template<typename T>
-class classA_tmpl
-{
 public:
-    int v;
-    classA* nxt=nullptr;
-    classA* lst=nullptr;
-    classA_tmpl(int a,float b,int* c,classA d)
+    myClock()
     {
-        
+        QueryPerformanceFrequency(&freq);
+    }
+
+    void setClock()
+    {
+        QueryPerformanceCounter(&start_t);
+    }
+
+    double getTime()
+    {
+        QueryPerformanceCounter(&stop_t);
+        return 1e3*(stop_t.QuadPart-start_t.QuadPart)/freq.QuadPart;
     }
 };
 
 template<typename T>
-class classB_tmpl
+class mySetWrapper
 {
+    std::set<T> s0;
 public:
-    classA_tmpl<T> *   tmpa;
-
-    template<typename ... ArgClassA>
-    classB_tmpl(int m,int* n,ArgClassA ... args)
+    bool find(ref_unless_builtin<T> item)
     {
-        tmpa=new classA_tmpl<T>(args...);
+        return s0.find(item)!=s0.end();
+    }
+
+    void insert(ref_unless_builtin<T> item)
+    {
+        s0.insert(item);
+    }
+
+    void erase(ref_unless_builtin<T> item)
+    {
+        s0.erase(item);
+    }
+
+
+};
+template<class set_class>
+class set_operation
+{
+    std::default_random_engine* rnd;
+    std::uniform_int_distribution<int>* dist;
+    set_class * set0;
+
+    int const base=100;
+    int insert_ops;
+    int erase_ops;
+    int sum_ops;
+public:
+
+    template<typename ... Args>
+    set_operation(int insert_ops,int erase_ops,int find_ops, Args ... args)
+    {
+        rnd=new std::default_random_engine(time(NULL));
+        dist=new std::uniform_int_distribution<int> (0,base);
+        sum_ops=(insert_ops+erase_ops+find_ops);
+        this->insert_ops=(insert_ops*base)/sum_ops;
+        this->erase_ops=this->insert_ops+(erase_ops*base)/sum_ops;
+        set0=new set_class(args...);
+    }
+    
+    void start_op()
+    {
+        for(int i=0;i<sum_ops;i++)
+        {
+            int item=(((17*i)%(sum_ops-7))*29)%(sum_ops);
+            int indic=(*dist)(*rnd);
+            if(indic>=insert_ops)
+            {
+                if(indic<=erase_ops)
+                {
+                    set0->erase(item);
+                }
+                else
+                {
+                    set0->find(item);
+                }
+            }
+            else
+            {
+                if(set0->find(item)==false)
+                    set0->insert(item);
+            }
+        }
     }
 };
- 
-void param_func(int a,classA a1,const char* a2,int* a3)
-{
-   std::cout<<"param_func"<<std::endl;
-}
-
-template<typename ... Args> 
-void multi_param_func(Args ... arg) 
-{
-    param_func(arg ... );
-}
 
 int main()
 {
     std::cout<<"main start"<<std::endl;
 
-    using rpt=skipListNode<int>;
-    using pt=rpt*;
-    skipList<int>* a1=new skipList<int>(20,100,20,3);
-    // myAllocator<rpt>* alloc1=a1->debug_getallocator();
+    int num_trial;
 
-    // int num,num_layer;
-    // for(int i=100;i<200;i+=(i*i+11*i)%7)
-    // {
-    //   std::cout<<"insert "<<i<<std::endl;  
-    //   num_layer=(i*i+11*i)%77;
-    //   num=i;
-    //   a1->insert(num,num_layer);
-    //   pt p_in=alloc1->pt;
-    //   a1->remove(num);
-    //   pt p_out=alloc1->pt_free;
-    //   int num_layer_out=alloc1->last_size_free;
-    //   if(p_in!=p_out)
-    //     std::cout<<"error p_in!=p_out "<<p_in<<" "<<p_out<<std::endl;
-    //   if(p_in!=alloc1->debug_get_memo(num_layer+1))
-    //     std::cout<<"error p_in!=mem_out "<<p_in<<" "<<alloc1->debug_get_memo(num_layer+1)<<std::endl;
-    //   if(num_layer+1!=num_layer_out)
-    //     std::cout<<"error num_layer+1!=num_layer_out "<<num_layer+1<<" "<<num_layer_out<<std::endl;
-    //   std::cout<<"end insert remove "<<i<<std::endl;  
-    // }
-    std::multiset<int> s0;
-    for(int i=0;i<100;i+=std::max(1,(i*i+11*i)%7))
+    for(num_trial=30000;num_trial<=400000;num_trial+=30000)
     {
-      a1->insert(i,(i*i+11*i)%77);
-      s0.insert(i);
-      std::cout<<"insert "<<i<<std::endl;
-    }
-    for(int i=0;i<100;i+=std::max(1,(i*i*i+11*i*i+17*i)%13))
-    {
-      std::cout<<"remove "<<i<<std::endl;
-      bool success=a1->remove(i);
-      if(success!=(s0.find(i)!=s0.end()))
-        std::cout<<"error find rmove"<<i<<std::endl;
-      s0.erase(i);
+        std::cout<<"try "<<num_trial<<std::endl;
+        int num_remove=num_trial*0.3;
+        int find=num_trial*0.8;
+
+    
+        set_operation<skipList<int>> op1(num_trial,num_remove,find,1000,0.9,100,10,2);
+        set_operation<mySetWrapper<int>> op2(num_trial,num_remove,find);
+
+        myClock clock0;
+
+
+        clock0.setClock();
+        std::set<int> s1;
+        op2.start_op();
+        std::cout<<"\t"<<clock0.getTime()<<std::endl;
+
+        clock0.setClock();
+        op1.start_op();
+        std::cout<<"\t"<<clock0.getTime()<<std::endl;
 
     }
-    for(int i=0;i<100;i+=std::max(1,(i*i+11*i)%7))
-    {
-        if(a1->find(i)!=(s0.find(i)!=s0.end()))
-            std::cout<<"error find "<<i<<" "<<a1->find(i)<<" "<<(s0.find(i)!=s0.end())<<std::endl;
-    }
+
+
     std::cout<<"main end"<<std::endl;
 }
 

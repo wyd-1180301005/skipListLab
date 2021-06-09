@@ -6,4 +6,7 @@ aux_source_directory(${current_path} skipList_source)
 add_library(${libName_skipList} STATIC ${skipList_source}) 
 target_include_directories(${libName_skipList} PUBLIC ${current_path} ${PROJECT_SOURCE_DIR}/source/myAllocator)
 
+# get_target_property(opts ${libName_skipList} COMPILE_OPTIONS )
+# message(STATUS ${opts})
+
 
