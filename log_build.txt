@@ -3,12 +3,21 @@
 
   gtest.vcxproj -> C:\Users\papalatia\Desktop\workplace\cpp\myskipListLab\skipLabBuild\lib\Debug\gtestd.lib
   gtest_main.vcxproj -> C:\Users\papalatia\Desktop\workplace\cpp\myskipListLab\skipLabBuild\lib\Debug\gtest_maind.lib
-  myAllocator_origin.cpp
   myAllocator.vcxproj -> C:\Users\papalatia\Desktop\workplace\cpp\myskipListLab\skipLabBuild\binaries\myAllocator\Debug\myAllocator.lib
   testHelper.vcxproj -> C:\Users\papalatia\Desktop\workplace\cpp\myskipListLab\skipLabBuild\binaries\test\Debug\testHelper.lib
-  TestmyAllocator.cpp
   TestmyAllocator.vcxproj -> C:\Users\papalatia\Desktop\workplace\cpp\myskipListLab\skipLabBuild\Debug\TestmyAllocator.exe
-  TestmySkipList.cpp
-  TestmySkipList.vcxproj -> C:\Users\papalatia\Desktop\workplace\cpp\myskipListLab\skipLabBuild\Debug\TestmySkipList.exe
+  skipList_origin.cpp
+C:\Users\papalatia\Desktop\workplace\cpp\myskipListLab\skipListLab\source\skipList\skipList_origin.cpp(1,1): warning C4819: 该文件包含不能在当前代码页(936)中表示的字符。请将该文件保存为 Unicode 格式以防止数据丢失 [C:\Users\papalatia\Desktop\workplace\cpp\myskipListLab\skipLabBuild\binaries\skipList\skipList.vcxproj]
+C:\Users\papalatia\Desktop\workplace\cpp\myskipListLab\skipListLab\source\skipList\skipList_origin.hpp(1,1): warning C4819: 该文件包含不能在当前代码页(936)中表示的字符。请将该文件保存为 Unicode 格式以防止数据丢失 [C:\Users\papalatia\Desktop\workplace\cpp\myskipListLab\skipLabBuild\binaries\skipList\skipList.vcxproj]
+  skipList.vcxproj -> C:\Users\papalatia\Desktop\workplace\cpp\myskipListLab\skipLabBuild\binaries\skipList\Debug\skipList.lib
+  TestskipList.cpp
+C:\Users\papalatia\Desktop\workplace\cpp\myskipListLab\skipListLab\source\test\TestskipList.cpp(1,1): warning C4819: 该文件包含不能在当前代码页(936)中表示的字符。请将该文件保存为 Unicode 格式以防止数据丢失 [C:\Users\papalatia\Desktop\workplace\cpp\myskipListLab\skipLabBuild\binaries\test\TestskipList.vcxproj]
+C:\Users\papalatia\Desktop\workplace\cpp\myskipListLab\skipListLab\source\skipList\skipList_origin.hpp(1,1): warning C4819: 该文件包含不能在当前代码页(936)中表示的字符。请将该文件保存为 Unicode 格式以防止数据丢失 [C:\Users\papalatia\Desktop\workplace\cpp\myskipListLab\skipLabBuild\binaries\test\TestskipList.vcxproj]
+C:\Users\papalatia\Desktop\workplace\cpp\myskipListLab\skipListLab\source\skipList\skipList_origin.cpp(1,1): warning C4819: 该文件包含不能在当前代码页(936)中表示的字符。请将该文件保存为 Unicode 格式以防止数据丢失 [C:\Users\papalatia\Desktop\workplace\cpp\myskipListLab\skipLabBuild\binaries\test\TestskipList.vcxproj]
+  TestskipList.vcxproj -> C:\Users\papalatia\Desktop\workplace\cpp\myskipListLab\skipLabBuild\Debug\TestskipList.exe
   gmock.vcxproj -> C:\Users\papalatia\Desktop\workplace\cpp\myskipListLab\skipLabBuild\lib\Debug\gmockd.lib
   gmock_main.vcxproj -> C:\Users\papalatia\Desktop\workplace\cpp\myskipListLab\skipLabBuild\lib\Debug\gmock_maind.lib
+  main.cpp
+C:\Users\papalatia\Desktop\workplace\cpp\myskipListLab\skipListLab\source\skipList\skipList_origin.hpp(1,1): warning C4819: 该文件包含不能在当前代码页(936)中表示的字符。请将该文件保存为 Unicode 格式以防止数据丢失 [C:\Users\papalatia\Desktop\workplace\cpp\myskipListLab\skipLabBuild\binaries\main\main.vcxproj]
+C:\Users\papalatia\Desktop\workplace\cpp\myskipListLab\skipListLab\source\skipList\skipList_origin.cpp(1,1): warning C4819: 该文件包含不能在当前代码页(936)中表示的字符。请将该文件保存为 Unicode 格式以防止数据丢失 [C:\Users\papalatia\Desktop\workplace\cpp\myskipListLab\skipLabBuild\binaries\main\main.vcxproj]
+  main.vcxproj -> C:\Users\papalatia\Desktop\workplace\cpp\myskipListLab\skipLabBuild\Debug\main.exe

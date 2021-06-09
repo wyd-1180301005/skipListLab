@@ -5,10 +5,10 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "调试myAllocator",
+            "name": "调试main",
             "type": "cppvsdbg",
             "request": "launch",
-            "program": "${workspaceFolder}\\skipLabBuild\\Debug\\TestmyAllocator.exe",
+            "program": "${workspaceFolder}\\skipLabBuild\\Debug\\main.exe",
             "args": [],
             "stopAtEntry": false,
             "cwd": "${workspaceFolder}\\skipListLab\\data",

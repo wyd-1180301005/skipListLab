@@ -4,26 +4,14 @@
     "version": "2.0.0",
     "tasks": [
         {
-            "label": "cmake",
-            "type": "shell",
-            "command": "cmake -S skipListLab -B skipLabBuild"
-        },
-        {
-            "label": "build",
-            "type": "shell",
-            "command": "cmake --build skipLabBuild",
-            "dependsOn": "cmake"
-        },
-        {
-            "label": "gtest",
-            "type": "shell",
-            "command": "cd skipLabBuild ; ctest",
-            "dependsOn": "build"
+          "label": "build",
+          "type": "shell",
+          "command": ".vscode/cmdls.bat skipListLab skipLabBuild DEBUG"  
         },
         {
             "label": "run_bat",
             "type": "shell",
-            "command": ".vscode/cmdls.bat",
+            "command": ".vscode/cmdls.bat skipListLab skipLabBuild DEBUG",
             "problemMatcher": [
                 {
                     "source": "cmake",
@@ -43,8 +31,8 @@
                             "code": 3
                         },
                         {
-                            "regexp": "^([^\\.\n]*\\.){0,1}([^\\.]*\\.){1,1}([^\\.\n\n]*\\.){0,1}$",
-                            "message": 2
+                            "regexp": "^(.*)$",
+                            "message": 1
                         }
                     ]
                 },
@@ -53,31 +41,35 @@
                     "fileLocation": "absolute",
                     "applyTo": "allDocuments",
                     "owner": "gtest",
-                    "pattern": {
-                        "regexp": "(.*.cpp)\\(([0-9]*)\\): (error):(.*)",
+                    "pattern": [
+                    {
+                        "regexp": "^(.*.cpp)\\(([0-9]*)\\): (error):\\s*\"([0-9]*)\"$",
                         "kind": "location",
                         "location": 2,
                         "file": 1,
                         "severity": 3,
-                        "message": 4
+                        "code": 4
+                    },
+                    {
+                        "regexp": "^(.*)$",
+                        "message": 1
                     }
+                    ]
                 },
                 {
                     "source": "cpp",
                     "fileLocation": "absolute",
                     "pattern": [
                         {
-                            "regexp": "^(.*\\.[c|h]pp)\\((\\d+),(\\d+)\\):\\s*(warning|error|)\\s*([0-9]*)\\s*$",
+                            "regexp": "^(.*)\\((\\d+|\\d+,\\d+|\\d+,\\d+,\\d+,\\d+)\\):\\s*(warning|error)\\s*([A-Z][0-9]*:)\\s*([0-9]*)$$",
                             "file": 1,
-                            "line": 2,
-                            "column": 3,
-                            "severity": 4,
+                            "location": 2,                                                                                                          
+                            "severity": 3,
                             "code": 5
                         },
                         {
-                            "regexp": "^([A-Z][0-9]*.*)(\\[.*\\]){1,1}\\s*$",
-                            "message": 1,
-                            "loop": false
+                            "regexp": "^(.*)(\\[.*\\]|\\[.*){1,1}\\s*$",
+                            "message": 1
                         }
                     ]
                 }

@@ -47,6 +47,19 @@
         "xlocinfo": "cpp",
         "xstddef": "cpp",
         "xtr1common": "cpp",
-        "list": "cpp"
+        "list": "cpp",
+        "deque": "cpp",
+        "forward_list": "cpp",
+        "fstream": "cpp",
+        "functional": "cpp",
+        "iomanip": "cpp",
+        "map": "cpp",
+        "sstream": "cpp",
+        "string": "cpp",
+        "unordered_map": "cpp",
+        "unordered_set": "cpp",
+        "xhash": "cpp",
+        "xlocmon": "cpp",
+        "xloctime": "cpp"
     }
 }

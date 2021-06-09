@@ -23,22 +23,22 @@ target_include_directories(
     PUBLIC ${PROJECT_BINARY_DIR}/_deps/googletest-src/googletest/include
 )
 
-# TestmySkipList
-add_executable(TestmySkipList TestmySkipList.cpp)
+# TestskipList
+add_executable(TestskipList TestskipList.cpp)
 target_link_libraries(
-    TestmySkipList 
-    # ${libName_mySkipList}
+    TestskipList 
+    ${libName_skipList}
     testHelper
     gtest_main
 )
 target_include_directories(
-    TestmySkipList 
-    # PUBLIC ${PROJECT_SOURCE_DIR}/source/mySkipList
+    TestskipList 
+    PUBLIC ${PROJECT_SOURCE_DIR}/source/skipList
     PUBLIC ${PROJECT_SOURCE_DIR}/source/myAllocator
     PUBLIC ${PROJECT_BINARY_DIR}/_deps/googletest-src/googletest/include
 )
 
 include(GoogleTest)
 gtest_discover_tests(TestmyAllocator)
-gtest_discover_tests(TestmySkipList)
+gtest_discover_tests(TestskipList)
 
